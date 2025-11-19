@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="shaders_class_project"
+run/main_scene="uid://cgdlofk5pdrec"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://bunny/icon.svg"

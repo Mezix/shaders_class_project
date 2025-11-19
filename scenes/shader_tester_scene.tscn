@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://cgdlofk5pdrec"]
+
+[ext_resource type="Shader" uid="uid://dxxqjmymhxyls" path="res://shaders/invert_shader.gdshader" id="1_070oo"]
+[ext_resource type="Shader" uid="uid://cwuhoqrsmkc3w" path="res://shaders/post_processing_gray_scale.gdshader" id="1_tmr34"]
+[ext_resource type="Texture2D" uid="uid://dmcd67par5ni4" path="res://bunny/bunny.jpg" id="2_tmr34"]
+[ext_resource type="ArrayMesh" uid="uid://c805an2u1pu0g" path="res://bunny/bunny.obj" id="3_81opt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t43cx"]
+albedo_color = Color(0.537011, 0.537011, 0.537011, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_81opt"]
+shader = ExtResource("1_tmr34")
+shader_parameter/weighted = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wyyfe"]
+render_priority = 0
+shader = ExtResource("1_070oo")
+shader_parameter/albedo = Color(1, 1, 0.317647, 1)
+shader_parameter/texture_albedo = ExtResource("2_tmr34")
+
+[node name="shader_tester_scene" type="Node"]
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.53191, 0)
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_t43cx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0355338, 0.381442, -0.92371, 0.0146626, 0.924393, 0.38116, 0.999261, 0, -0.0384401, -1.03553, 0.519964, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.933041, 0.359769, 0, -0.359769, 0.933041, 0, 0.241275, 0.328215)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScreenSpaceShader" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_81opt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BunnyRoot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0128529, 0)
+
+[node name="Bunny" type="MeshInstance3D" parent="BunnyRoot"]
+material_override = SubResource("ShaderMaterial_wyyfe")
+mesh = ExtResource("3_81opt")

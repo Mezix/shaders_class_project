@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://x3p6qpecncdq"]
 
 [ext_resource type="ArrayMesh" uid="uid://c805an2u1pu0g" path="res://bunny/bunny.obj" id="1_513xl"]
-[ext_resource type="Shader" uid="uid://dxxqjmymhxyls" path="res://bunny/invert_shader.gdshader" id="1_hkmxs"]
+[ext_resource type="Shader" uid="uid://dxxqjmymhxyls" path="res://shaders/invert_shader.gdshader" id="1_hkmxs"]
 [ext_resource type="Texture2D" uid="uid://dmcd67par5ni4" path="res://bunny/bunny.jpg" id="2_0hix2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wyyfe"]
@@ -10,7 +10,7 @@ shader = ExtResource("1_hkmxs")
 shader_parameter/albedo = Color(1, 1, 0.317647, 1)
 shader_parameter/texture_albedo = ExtResource("2_0hix2")
 
-[node name="Node3D" type="Node3D"]
+[node name="BunnyRoot" type="Node3D"]
 
 [node name="Bunny" type="MeshInstance3D" parent="."]
 material_override = SubResource("ShaderMaterial_wyyfe")

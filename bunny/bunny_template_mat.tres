@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b8ulp13klvimj"]
 
-[ext_resource type="Shader" uid="uid://8horsy74heiv" path="res://bunny/bunny_template.gdshader" id="1_rpn4c"]
+[ext_resource type="Shader" uid="uid://8horsy74heiv" path="res://shaders/bunny_template.gdshader" id="1_rpn4c"]
 
 [resource]
 render_priority = 0
