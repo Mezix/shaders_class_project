@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cgdlofk5pdrec"]
+[gd_scene load_steps=22 format=3 uid="uid://cgdlofk5pdrec"]
 
 [ext_resource type="Shader" uid="uid://cwuhoqrsmkc3w" path="res://shaders/post_processing_gray_scale.gdshader" id="1_tmr34"]
 [ext_resource type="Shader" uid="uid://phqa2f3ghoao" path="res://bunny/vertex_scrambler.gdshader" id="2_070oo"]
@@ -10,6 +10,7 @@
 [ext_resource type="Shader" uid="uid://b26da0vhqgyl5" path="res://bunny/gouraud_shader.gdshader" id="8_a04r1"]
 [ext_resource type="Shader" uid="uid://btqpc1ssoi52b" path="res://bunny/blinn_phong_shader.gdshader" id="9_t7x8e"]
 [ext_resource type="Shader" uid="uid://brd0knlubed8u" path="res://bunny/bump_mapping_shader.gdshader" id="10_t7x8e"]
+[ext_resource type="Texture2D" uid="uid://dvgroo2j8gwvl" path="res://bunny/wall_normal_map.png" id="11_kasbq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t43cx"]
 albedo_color = Color(0.537011, 0.537011, 0.537011, 1)
@@ -56,8 +57,10 @@ shader_parameter/texture_albedo = ExtResource("2_tmr34")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cfkjl"]
 render_priority = 0
 shader = ExtResource("10_t7x8e")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = ExtResource("2_tmr34")
+shader_parameter/albedo_tex = Color(1, 1, 1, 1)
+shader_parameter/_MainTex = ExtResource("2_tmr34")
+shader_parameter/_NormalMap = ExtResource("11_kasbq")
+shader_parameter/_Scale = -3.0
 
 [node name="shader_tester_scene" type="Node"]
 
