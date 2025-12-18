@@ -1,9 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgdlofk5pdrec"]
+[gd_scene load_steps=21 format=3 uid="uid://cgdlofk5pdrec"]
 
-[ext_resource type="Shader" uid="uid://dxxqjmymhxyls" path="res://shaders/invert_shader.gdshader" id="1_070oo"]
 [ext_resource type="Shader" uid="uid://cwuhoqrsmkc3w" path="res://shaders/post_processing_gray_scale.gdshader" id="1_tmr34"]
+[ext_resource type="Shader" uid="uid://phqa2f3ghoao" path="res://bunny/vertex_scrambler.gdshader" id="2_070oo"]
+[ext_resource type="Shader" uid="uid://6wfjf2dnivdo" path="res://bunny/invert_shader.gdshader" id="2_81opt"]
 [ext_resource type="Texture2D" uid="uid://dmcd67par5ni4" path="res://bunny/bunny.jpg" id="2_tmr34"]
 [ext_resource type="ArrayMesh" uid="uid://c805an2u1pu0g" path="res://bunny/bunny.obj" id="3_81opt"]
+[ext_resource type="Shader" uid="uid://dxcpvlxyp5sct" path="res://bunny/bunny_same_color.gdshader" id="4_tmr34"]
+[ext_resource type="Shader" uid="uid://dxuim7bgjmnj2" path="res://bunny/grayscale_shader.gdshader" id="6_82yli"]
+[ext_resource type="Shader" uid="uid://b26da0vhqgyl5" path="res://bunny/gouraud_shader.gdshader" id="8_a04r1"]
+[ext_resource type="Shader" uid="uid://btqpc1ssoi52b" path="res://bunny/blinn_phong_shader.gdshader" id="9_t7x8e"]
+[ext_resource type="Shader" uid="uid://brd0knlubed8u" path="res://bunny/bump_mapping_shader.gdshader" id="10_t7x8e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t43cx"]
 albedo_color = Color(0.537011, 0.537011, 0.537011, 1)
@@ -12,10 +18,45 @@ albedo_color = Color(0.537011, 0.537011, 0.537011, 1)
 shader = ExtResource("1_tmr34")
 shader_parameter/weighted = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wyyfe"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_070oo"]
+albedo_texture = ExtResource("2_tmr34")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_82yli"]
 render_priority = 0
-shader = ExtResource("1_070oo")
-shader_parameter/albedo = Color(1, 1, 0.317647, 1)
+shader = ExtResource("4_tmr34")
+shader_parameter/albedo = Color(0, 0.5314, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fdlo0"]
+render_priority = 0
+shader = ExtResource("2_81opt")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_tmr34")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b43tj"]
+render_priority = 0
+shader = ExtResource("6_82yli")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_tmr34")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a04r1"]
+render_priority = 0
+shader = ExtResource("2_070oo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kasbq"]
+render_priority = 0
+shader = ExtResource("8_a04r1")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcuva"]
+render_priority = 0
+shader = ExtResource("9_t7x8e")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_tmr34")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cfkjl"]
+render_priority = 0
+shader = ExtResource("10_t7x8e")
+shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_albedo = ExtResource("2_tmr34")
 
 [node name="shader_tester_scene" type="Node"]
@@ -26,13 +67,14 @@ size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_t43cx")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.0355338, 0.381442, -0.92371, 0.0146626, 0.924393, 0.38116, 0.999261, 0, -0.0384401, -1.03553, 0.519964, 0)
+transform = Transform3D(0.686334, 0.267911, -0.676143, 0.0146626, 0.924393, 0.38116, 0.727139, -0.271517, 0.630514, -0.779642, 0.505646, 0.522965)
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.933041, 0.359769, 0, -0.359769, 0.933041, 0, 0.241275, 0.328215)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ScreenSpaceShader" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_81opt")
@@ -42,9 +84,54 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BunnyRoot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0128529, 0)
-
-[node name="Bunny" type="MeshInstance3D" parent="BunnyRoot"]
-material_override = SubResource("ShaderMaterial_wyyfe")
+[node name="Bunny_Default" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.920377, -0.0128529, 0)
+material_override = SubResource("StandardMaterial3D_070oo")
 mesh = ExtResource("3_81opt")
+skeleton = NodePath("")
+
+[node name="Bunny_SameColor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.681106, -0.0128529, 0)
+material_override = SubResource("ShaderMaterial_82yli")
+mesh = ExtResource("3_81opt")
+skeleton = NodePath("")
+
+[node name="Bunny_Inverted" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.404021, -0.0128529, 0)
+material_override = SubResource("ShaderMaterial_fdlo0")
+mesh = ExtResource("3_81opt")
+skeleton = NodePath("")
+
+[node name="Bunny_Grayscale" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.159208, -0.0128529, 0)
+material_override = SubResource("ShaderMaterial_b43tj")
+mesh = ExtResource("3_81opt")
+skeleton = NodePath("")
+
+[node name="Bunny_VertexScrambling" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120163, -0.0128529, 0)
+material_override = SubResource("ShaderMaterial_a04r1")
+mesh = ExtResource("3_81opt")
+skeleton = NodePath("")
+
+[node name="Bunny_Gourand" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.375897, -0.0128529, 0)
+material_override = SubResource("ShaderMaterial_kasbq")
+mesh = ExtResource("3_81opt")
+skeleton = NodePath("")
+
+[node name="Bunny_BlinnPhong" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.662838, -0.0128529, 0)
+material_override = SubResource("ShaderMaterial_hcuva")
+mesh = ExtResource("3_81opt")
+skeleton = NodePath("")
+
+[node name="Bunny_BumpMap" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.97464, -0.0128529, 0)
+material_override = SubResource("ShaderMaterial_cfkjl")
+mesh = ExtResource("3_81opt")
+skeleton = NodePath("")
+
+[node name="BackWall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.763094)
+size = Vector3(3.19, 2.25, 0.309)
